@@ -60,7 +60,7 @@ public class LoginFragment extends Fragment {
         user.setPassword(password);
 //        user.setRole("ADMIN_ROLE");
         viewModel.login(user);
-        viewModel.getUserRoleResponse().observe(getViewLifecycleOwner(), userRoleResponse->{
+        viewModel.getUseResponse().observe(getViewLifecycleOwner(), userResponse -> {
 //            switch (userRoleResponse){
 //                case "USER_ROLE":
 //                    authManager.saveUser(email);
@@ -79,20 +79,17 @@ public class LoginFragment extends Fragment {
 //
 //            }
             Log.d("Login", viewModel.getLoginErrorResponse());
-            if (userRoleResponse.equals("ROLE_USER")){
-                Log.d("Login", userRoleResponse.toString());
-                authManager.saveUser(email);
-                authManager.saveRole(userRoleResponse);
+            String auth_token = viewModel.getAuth_token();
+            if (userResponse.getRole().equals("ROLE_USER")) {
+                Log.d("Login", userResponse.toString());
+                authManager.saveUser(email, userResponse.getRole(), userResponse.getId(), auth_token);
                 startActivity(new Intent(getActivity(), MainActivity.class));
-            }
-            else if (userRoleResponse.equals("ROLE_ADMIN")){
-                Log.d("Login", userRoleResponse.toString());
-                authManager.saveUser(email);
-                authManager.saveRole(userRoleResponse);
+            } else if (userResponse.getRole().equals("ROLE_ADMIN")) {
+                Log.d("Login", userResponse.toString());
+                authManager.saveUser(email, userResponse.getRole(), userResponse.getId(), auth_token);
                 startActivity(new Intent(getActivity(), AdminActivity.class));
-            }
-            else{
-                Log.d("Login", userRoleResponse.toString());
+            } else {
+                Log.d("Login", userResponse.toString());
                 Toast.makeText(requireContext(), "Invalid Credentials", Toast.LENGTH_SHORT).show();
             }
         });

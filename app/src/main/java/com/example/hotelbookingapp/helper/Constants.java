@@ -5,6 +5,8 @@ public class Constants {
     public static final String API_KEY = "38d69bfad7mshe1ddb8dcfb829c8p1c872ejsn18acd4c5def8";
     public static final String SHARED_PREF_NAME = "user_pref";
     public static final String USER_KEY = "user_key";
+    public static final String USER_ID_KEY = "user_key";
+    public static final String TOKEN_KEY = "user_key";
     public static final String ROLE_KEY = "role_key";
     public static final String USER_ROLE = "USER_ROLE";
     public static final String ADMIN_ROLE = "ADMIN_ROLE";

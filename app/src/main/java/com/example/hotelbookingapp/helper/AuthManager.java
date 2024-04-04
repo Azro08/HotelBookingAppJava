@@ -23,10 +23,36 @@ public class AuthManager {
         return sharedPreferences.getString(Constants.USER_KEY, "");
     }
 
-    public void saveUser(String email) {
+    public String getRole() {
         SharedPreferences sharedPreferences =
                 context.getSharedPreferences(Constants.SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        sharedPreferences.edit().putString(Constants.USER_KEY, email).apply();
+        sharedPreferences.getString(Constants.ROLE_KEY, "");
+        return sharedPreferences.getString(Constants.ROLE_KEY, "");
+    }
+
+    public String getToken() {
+        SharedPreferences sharedPreferences =
+                context.getSharedPreferences(Constants.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        sharedPreferences.getString(Constants.TOKEN_KEY, "");
+        return sharedPreferences.getString(Constants.TOKEN_KEY, "");
+    }
+
+    public int getUserId() {
+        SharedPreferences sharedPreferences =
+                context.getSharedPreferences(Constants.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        sharedPreferences.getInt(Constants.USER_ID_KEY, 0);
+        return sharedPreferences.getInt(Constants.USER_ID_KEY, 0);
+    }
+
+    public void saveUser(String email, String role, int id, String jwtToke) {
+        SharedPreferences sharedPreferences =
+                context.getSharedPreferences(Constants.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        sharedPreferences.edit()
+                .putString(Constants.USER_KEY, email)
+                .putInt(Constants.USER_ID_KEY, id)
+                .putString(Constants.TOKEN_KEY, jwtToke)
+                .putString(Constants.ROLE_KEY, role)
+                .apply();
     }
 
     public void saveRole(String role) {
@@ -38,6 +64,11 @@ public class AuthManager {
     public void removeUser() {
         SharedPreferences sharedPreferences =
                 context.getSharedPreferences(Constants.SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        sharedPreferences.edit().remove(Constants.USER_KEY).apply();
+        sharedPreferences.edit()
+                .remove(Constants.USER_KEY)
+                .remove(Constants.ROLE_KEY)
+                .remove(Constants.TOKEN_KEY)
+                .remove(Constants.USER_ID_KEY)
+                .apply();
     }
 }

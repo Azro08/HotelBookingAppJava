@@ -1,6 +1,6 @@
 package com.example.hotelbookingapp.helper;
 
-public interface ApiCallback {
-    void onSuccess(String responseBody);
+public interface ApiCallback<T> {
+    void onSuccess(T responseBody);
     void onFailure(String errorMessage);
 }

@@ -2,8 +2,11 @@ package com.example.hotelbookingapp.data.repository;
 
 import android.util.Log;
 
+import com.example.hotelbookingapp.data.api.BookingApiService;
 import com.example.hotelbookingapp.data.dto.hotel_booking.BookingDetails;
 import com.example.hotelbookingapp.domain.repository.BookingRepository;
+import com.example.hotelbookingapp.helper.ApiCallback;
+import com.example.hotelbookingapp.helper.AuthManager;
 import com.example.hotelbookingapp.helper.Constants;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -13,85 +16,58 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BookingRepositoryImpl implements BookingRepository {
 
-    private final FirebaseFirestore firebaseFirestore;
-    private final FirebaseAuth firebaseAuth;
+    private final BookingApiService bookingApiService;
+    private final AuthManager authManager;
 
     @Inject
-    public BookingRepositoryImpl(FirebaseFirestore firebaseFirestore, FirebaseAuth firebaseAuth) {
-        this.firebaseFirestore = firebaseFirestore;
-        this.firebaseAuth = firebaseAuth;
+    public BookingRepositoryImpl(BookingApiService bookingApiService, AuthManager authManager) {
+        this.bookingApiService = bookingApiService;
+        this.authManager = authManager;
     }
 
     @Override
-    public void bookHotel(BookingDetails bookingDetails) {
-        firebaseFirestore.collection(Constants.BOOKING).document().set(bookingDetails);
-    }
-
-    @Override
-    public Observable<List<BookingDetails>> getBookingHistory() {
-        return Observable.create(emitter -> {
-            String userId = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
-            firebaseFirestore.collection(Constants.BOOKING)
-                    .whereEqualTo("userId", userId)
-                    .get()
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            QuerySnapshot querySnapshot = task.getResult();
-                            if (querySnapshot != null) {
-                                List<BookingDetails> bookingDetailsList = querySnapshot.toObjects(BookingDetails.class);
-                                emitter.onNext(bookingDetailsList);
-                                emitter.onComplete();
-                            } else {
-                                emitter.onError(new IllegalStateException("Error getting booking history"));
-                            }
-                        } else {
-                            emitter.onError(task.getException());
-                        }
-                    });
-        });
-    }
-
-    @Override
-    public void removeBookedHotel(String hotelName, String bookId) {
-        String userId = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
-
-        // Create a query to filter documents by userId and hotelName
-        CollectionReference collection = firebaseFirestore.collection(Constants.BOOKING);
-        Query query = collection
-                .whereEqualTo("userId", userId)
-                .whereEqualTo("bookId", bookId)
-                .whereEqualTo("hotelName", hotelName);
-
-        query.get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                QuerySnapshot querySnapshot = task.getResult();
-                if (querySnapshot != null) {
-                    for (QueryDocumentSnapshot document : querySnapshot) {
-                        // Get the reference to the document and delete it
-                        DocumentReference documentReference = document.getReference();
-                        documentReference.delete();
+    public void bookHotel(BookingDetails bookingDetails, ApiCallback callback) {
+        Call<String> call = bookingApiService.bookHotel(bookingDetails);
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.body());
+                } else {
+                    try {
+                        callback.onFailure("Sign up failed. Error: " + response.errorBody().string());
+                    } catch (IOException e) {
+                        callback.onFailure("Sign up failed. Error: " + e.getMessage());
                     }
                 }
-            } else {
-                // Handle the error if the task is not successful
-                Exception exception = task.getException();
-                if (exception != null) {
-                    // Log the error or display an error message
-                    Log.e("Firebase Error", "Error deleting documents: " + exception.getMessage());
-                    // You can also show an error message to the user if appropriate
-                }
+            }
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                callback.onFailure(t.getMessage());
             }
         });
     }
 
+    @Override
+    public void getBookingHistory(ApiCallback callback) {
 
+    }
+
+    @Override
+    public void removeBookedHotel(String hotelName, String bookId, ApiCallback callback) {
+
+    }
 }

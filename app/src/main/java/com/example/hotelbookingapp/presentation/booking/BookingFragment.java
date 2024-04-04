@@ -112,6 +112,11 @@ public class BookingFragment extends Fragment {
         );
 
         viewModel.bookHotel(bookingDetails);
+        viewModel.getBookingResponse().observe(getViewLifecycleOwner(), bookingResponse -> {
+            if (bookingResponse != null) {
+                Toast.makeText(requireContext(), bookingResponse, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private String generateRandomString() {
