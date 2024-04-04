@@ -37,14 +37,14 @@
             android:text="@string/from" />
 
         <ImageButton
-            android:id="@+id/imageButtonDateFrom"
+            android:hotelId="@+hotelId/imageButtonDateFrom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:background="@drawable/date_picker_icon" />
 
         <TextView
-            android:id="@+id/textViewCheckInDate"
+            android:hotelId="@+hotelId/textViewCheckInDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="2023-10-11" />
@@ -58,7 +58,7 @@
 
 
         <ImageButton
-            android:id="@+id/imageButtonDateTo"
+            android:hotelId="@+hotelId/imageButtonDateTo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
@@ -66,7 +66,7 @@
             android:importantForAccessibility="no" />
 
         <TextView
-            android:id="@+id/textViewCheckOutDate"
+            android:hotelId="@+hotelId/textViewCheckOutDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="2023-10-11" />
@@ -75,7 +75,7 @@
     </LinearLayout>
 
     <EditText
-        android:id="@+id/editTextLocation"
+        android:hotelId="@+hotelId/editTextLocation"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="3dp"
@@ -87,7 +87,7 @@
         android:textColor="@color/black" />
 
     <Button
-        android:id="@+id/buttonFindLocation"
+        android:hotelId="@+hotelId/buttonFindLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -97,7 +97,7 @@
         android:textSize="20sp" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerPopularLocations"
+        android:hotelId="@+hotelId/recyclerPopularLocations"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

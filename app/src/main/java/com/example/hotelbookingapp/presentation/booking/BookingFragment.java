@@ -17,6 +17,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.example.hotelbookingapp.data.dto.hotel_booking.BookingDetails;
 import com.example.hotelbookingapp.data.dto.hotel_booking.CardDetails;
 import com.example.hotelbookingapp.databinding.FragmentBookingBinding;
+import com.example.hotelbookingapp.helper.AuthManager;
 import com.example.hotelbookingapp.helper.Constants;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -24,7 +25,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -36,6 +36,8 @@ public class BookingFragment extends Fragment {
     FirebaseAuth firebaseAuth;
     private FragmentBookingBinding binding;
     private BookingViewModel viewModel;
+    @Inject
+    AuthManager authManager;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -104,8 +106,8 @@ public class BookingFragment extends Fragment {
         int cardNumber = parseNullableInt(binding.editTextCardNumber.getText().toString());
         String expiryDate = binding.editTextExpiryDate.getText().toString();
         int cvv = parseNullableInt(binding.editTextCVV.getText().toString());
-        String userId = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
-        String bookId = generateRandomString();
+        int userId = authManager.getUserId();
+        int bookId = generateRandomId();
         BookingDetails bookingDetails = new BookingDetails(
                 bookId, hotelName, userId, firstName, lastName, email, phoneNumber, checkInDate, checkOutDate,
                 adultsNumber, childrenNumber, paymentType, new CardDetails(cardNumber, expiryDate, cvv)
@@ -119,8 +121,8 @@ public class BookingFragment extends Fragment {
         });
     }
 
-    private String generateRandomString() {
-        return java.util.UUID.randomUUID().toString(); // Generate a random UUID string for the bookId field.
+    private int generateRandomId() {
+        return (int) (Math.random() * 10000); // Generate a random ID between 0 and 1000000 (inclusive)
     }
 
     private boolean areAllFieldsFilled() {

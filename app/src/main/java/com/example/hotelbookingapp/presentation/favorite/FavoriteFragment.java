@@ -2,7 +2,6 @@ package com.example.hotelbookingapp.presentation.favorite;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,7 +95,7 @@ public class FavoriteFragment extends Fragment {
     private void navToDetails(SingleHotelItem data) {
         Bundle bundle = new Bundle();
         bundle.putDouble(Constants.SCORE_KEY, data.getReview());
-        bundle.putString(Constants.HOTEL_ID_KEY, data.getId());
+        bundle.putString(Constants.HOTEL_ID_KEY, data.getHotelId());
         NavHostFragment.findNavController(this).navigate(
                 R.id.nav_fav_to_details,
                 bundle

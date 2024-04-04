@@ -17,14 +17,14 @@
         android:text="@string/booking_history" />
 
     <pl.droidsonroids.gif.GifImageView
-        android:id="@+id/loadingGif"
+        android:hotelId="@+hotelId/loadingGif"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center"
         android:background="@drawable/loading_gif" />
 
     <TextView
-        android:id="@+id/textViewError"
+        android:hotelId="@+hotelId/textViewError"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -38,12 +38,12 @@
         android:text="@string/no_favorite_hotels" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeRefreshLayout"
+        android:hotelId="@+hotelId/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvBookingHistory"
+            android:hotelId="@+hotelId/rvBookingHistory"
             android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

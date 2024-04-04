@@ -25,7 +25,6 @@ public class HistoryFragment extends Fragment {
     private FragmentHistoryBinding binding;
     private HistoryViewModel viewModel;
     private RvBookingHistoryAdapter rvAdapter;
-    private Disposable subscription;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,19 +40,10 @@ public class HistoryFragment extends Fragment {
 
     private void viewModelOutputs() {
         viewModel = new ViewModelProvider(this).get(HistoryViewModel.class);
-        viewModel.getBookingListResponse().observe(getViewLifecycleOwner(), hotelResponseObservable -> {
-            if (hotelResponseObservable != null) {
-                subscription = hotelResponseObservable.subscribe(
-                        response -> {
-                            if (response != null && !response.isEmpty()) {
-                                displayHistory(response);
-                            } else {
-                                viewModel.getResponseError().observe(getViewLifecycleOwner(), this::handleError);
-                            }
-                        },
-                        error -> handleError(error.getMessage())
-                );
-            }
+        viewModel.getBookingListResponse().observe(getViewLifecycleOwner(), bookingDetailsList -> {
+            if (bookingDetailsList != null) {
+                displayHistory(bookingDetailsList);
+            } else viewModel.getResponseError().observe(getViewLifecycleOwner(), this::handleError);
         });
         viewModel.getResponseError().observe(getViewLifecycleOwner(), this::handleError);
     }
@@ -87,7 +77,7 @@ public class HistoryFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         builder.setTitle("Are you sure you want to cancel?");
         builder.setPositiveButton("Yes", (dialog, which) -> {
-            viewModel.removeBookedHotel(hotel.getHotelName(), hotel.getBookId());
+            viewModel.removeBookedHotel(hotel.getBookId());
             refreshFragment();
         });
         builder.setNegativeButton("No", (dialog, which) -> dialog.dismiss());
@@ -105,8 +95,5 @@ public class HistoryFragment extends Fragment {
         super.onDestroy();
         binding = null;
         rvAdapter = null;
-        if (subscription != null && !subscription.isDisposed()) {
-            subscription.dispose();
-        }
     }
 }

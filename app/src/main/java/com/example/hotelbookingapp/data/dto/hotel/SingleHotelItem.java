@@ -1,8 +1,8 @@
 package com.example.hotelbookingapp.data.dto.hotel;
 
 public class SingleHotelItem {
-    private String userId;
-    private String id;
+    private int userId;
+    private String hotelId;
     private String name;
     private String neighborhood;
     private String price;
@@ -13,9 +13,9 @@ public class SingleHotelItem {
         // Default constructor required for Gson serialization
     }
 
-    public SingleHotelItem(String userId, String id, String name, String neighborhood, String price, String imageUrl, Double review) {
+    public SingleHotelItem(int userId, String hotelId, String name, String neighborhood, String price, String imageUrl, Double review) {
         this.userId = userId;
-        this.id = id;
+        this.hotelId = hotelId;
         this.name = name;
         this.neighborhood = neighborhood;
         this.price = price;
@@ -23,20 +23,20 @@ public class SingleHotelItem {
         this.review = review;
     }
 
-    public String getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
-    public String getId() {
-        return id;
+    public String getHotelId() {
+        return hotelId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setHotelId(String hotelId) {
+        this.hotelId = hotelId;
     }
 
     public String getName() {

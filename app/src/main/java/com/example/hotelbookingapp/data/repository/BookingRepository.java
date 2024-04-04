@@ -3,6 +3,7 @@ package com.example.hotelbookingapp.data.repository;
 import com.example.hotelbookingapp.data.api.BookingApiService;
 import com.example.hotelbookingapp.data.dto.hotel_booking.BookingDetails;
 import com.example.hotelbookingapp.helper.ApiCallback;
+import com.example.hotelbookingapp.helper.AuthManager;
 
 import java.io.IOException;
 import java.util.List;
@@ -16,10 +17,11 @@ import retrofit2.Response;
 public class BookingRepository {
 
     private final BookingApiService bookingApiService;
-
+    private final AuthManager authManager;
     @Inject
-    public BookingRepository(BookingApiService bookingApiService) {
+    public BookingRepository(BookingApiService bookingApiService, AuthManager authManager) {
         this.bookingApiService = bookingApiService;
+        this.authManager = authManager;
     }
 
     public void bookHotel(BookingDetails bookingDetails, ApiCallback<String> callback) {
@@ -45,7 +47,8 @@ public class BookingRepository {
         });
     }
 
-    public void getBookingHistory(int userId, ApiCallback<List<BookingDetails>> callback) {
+    public void getBookingHistory(ApiCallback<List<BookingDetails>> callback) {
+        int userId = authManager.getUserId();
         Call<List<BookingDetails>> call = bookingApiService.getBookedHotels(userId);
         call.enqueue(new Callback<List<BookingDetails>>() {
             @Override
@@ -68,7 +71,7 @@ public class BookingRepository {
         });
     }
 
-    public void removeBookedHotel(int bookId, ApiCallback<String> callback) {
+    public void cancelBooking(int bookId, ApiCallback<String> callback) {
         Call<String> call = bookingApiService.cancelBooking(bookId);
         call.enqueue(new Callback<String>() {
             @Override

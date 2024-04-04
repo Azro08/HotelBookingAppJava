@@ -26,7 +26,7 @@
         android:fontFamily="cursive"/>
 
     <EditText
-        android:id="@+id/editTextLoginEmail"
+        android:hotelId="@+hotelId/editTextLoginEmail"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:hint="@string/email"
@@ -38,7 +38,7 @@
         android:importantForAutofill="no" />
 
     <EditText
-        android:id="@+id/editTextLoginPassword"
+        android:hotelId="@+hotelId/editTextLoginPassword"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:hint="@string/password"
@@ -50,7 +50,7 @@
         android:importantForAutofill="no" />
 
     <Button
-        android:id="@+id/buttonLogin"
+        android:hotelId="@+hotelId/buttonLogin"
         android:layout_width="match_parent"
         android:layout_margin="20dp"
         android:layout_height="wrap_content"
@@ -59,7 +59,7 @@
         android:text="@string/login"/>
 
     <TextView
-        android:id="@+id/textViewSignup"
+        android:hotelId="@+hotelId/textViewSignup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/signup_underline"

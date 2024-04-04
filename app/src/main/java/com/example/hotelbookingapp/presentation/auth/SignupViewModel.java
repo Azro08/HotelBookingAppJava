@@ -32,7 +32,7 @@ public class SignupViewModel extends ViewModel {
     }
 
     public void signup(User user) {
-        authRepository.signup(user, new ApiCallback() {
+        authRepository.signup(user, new ApiCallback<String>() {
             @Override
             public void onSuccess(String responseBody) {
                 signUpResponse.postValue(responseBody);

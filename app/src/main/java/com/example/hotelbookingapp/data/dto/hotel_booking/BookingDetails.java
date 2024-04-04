@@ -1,9 +1,9 @@
 package com.example.hotelbookingapp.data.dto.hotel_booking;
 
 public class BookingDetails {
-    private String bookId;
+    private int bookId;
     private String hotelName;
-    private String userId;
+    private int userId;
     private String firstName;
     private String lastName;
     private String email;
@@ -19,7 +19,7 @@ public class BookingDetails {
         // Default constructor required for Gson serialization
     }
 
-    public BookingDetails(String bookId,String hotelName, String userId, String firstName, String lastName, String email,
+    public BookingDetails(int bookId, String hotelName, int userId, String firstName, String lastName, String email,
                           String phoneNum, String checkInDate, String checkOutDate, int adultNumber, int childrenNum,
                           String paymentType, CardDetails cardDetails) {
         this.bookId = bookId;
@@ -45,11 +45,11 @@ public class BookingDetails {
         this.hotelName = hotelName;
     }
 
-    public String getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
@@ -133,11 +133,11 @@ public class BookingDetails {
         this.cardDetails = cardDetails;
     }
 
-    public String getBookId() {
+    public int getBookId() {
         return bookId;
     }
 
-    public void setBookId(String bookId) {
+    public void setBookId(int bookId) {
         this.bookId = bookId;
     }
 }
