@@ -2,6 +2,8 @@ package com.example.hotelbookingapp.di;
 
 import android.content.Context;
 
+import com.example.hotelbookingapp.data.api.BookingApiService;
+import com.example.hotelbookingapp.data.api.FavoriteHotelsApiService;
 import com.example.hotelbookingapp.data.api.HotelDetailsApi;
 import com.example.hotelbookingapp.data.api.HotelsListApi;
 import com.example.hotelbookingapp.data.api.LocationGeoIdApi;
@@ -16,7 +18,6 @@ import com.example.hotelbookingapp.domain.repository.HotelDetailsRepository;
 import com.example.hotelbookingapp.domain.repository.HotelsListRepository;
 import com.example.hotelbookingapp.domain.repository.RegionIdRepository;
 import com.example.hotelbookingapp.helper.AuthManager;
-import com.example.hotelbookingapp.helper.Constants;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -27,10 +28,6 @@ import dagger.Provides;
 import dagger.hilt.InstallIn;
 import dagger.hilt.android.qualifiers.ApplicationContext;
 import dagger.hilt.components.SingletonComponent;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
 @InstallIn(SingletonComponent.class)
@@ -50,8 +47,8 @@ public abstract class AppModule {
 
     @Singleton
     @Provides
-    public static BookingRepository provideBookingRepository(FirebaseFirestore firestore, FirebaseAuth firebaseAuth) {
-        return new BookingRepositoryImpl(firestore, firebaseAuth);
+    public static BookingRepository provideBookingRepository(BookingApiService bookingApiService) {
+        return new BookingRepositoryImpl(bookingApiService);
     }
 
     @Provides
@@ -68,7 +65,7 @@ public abstract class AppModule {
 
     @Provides
     @Singleton
-    public static FavoriteHotelsRepository provideFavoriteHotelsRepository(FirebaseFirestore firestore, FirebaseAuth firebaseAuth) {
-        return new FavoriteHotelsRepositoryImpl(firestore, firebaseAuth);
+    public static FavoriteHotelsRepositoryImpl provideFavoriteHotelsRepository(FavoriteHotelsApiService favoriteHotelsApiService, AuthManager authManager) {
+        return new FavoriteHotelsRepositoryImpl(favoriteHotelsApiService, authManager);
     }
 }

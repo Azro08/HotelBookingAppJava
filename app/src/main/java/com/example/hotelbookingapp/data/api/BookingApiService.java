@@ -17,7 +17,9 @@ public interface BookingApiService {
     );
 
     @GET("booking/get_booked_hotels")
-    Call<List<BookingDetails>> getBookedHotels();
+    Call<List<BookingDetails>> getBookedHotels(
+            @Query("userId") int userId
+    );
 
     @GET("booking/get_booking_details")
     Call<BookingDetails> getBookingDetails(

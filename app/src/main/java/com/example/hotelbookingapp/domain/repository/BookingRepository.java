@@ -9,9 +9,9 @@ import io.reactivex.Observable;
 
 public interface BookingRepository {
 
-    void bookHotel(BookingDetails bookingDetails, ApiCallback callback);
+    void bookHotel(BookingDetails bookingDetails, ApiCallback<String> callback);
 
-    void getBookingHistory(ApiCallback callback);
+    void getBookingHistory(int userId, ApiCallback<List<BookingDetails>> callback);
 
-    void removeBookedHotel(String hotelName, String bookId, ApiCallback callback);
+    void removeBookedHotel(int bookId, ApiCallback<String> callback);
 }

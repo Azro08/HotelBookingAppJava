@@ -30,16 +30,14 @@ import retrofit2.Response;
 public class BookingRepositoryImpl implements BookingRepository {
 
     private final BookingApiService bookingApiService;
-    private final AuthManager authManager;
 
     @Inject
-    public BookingRepositoryImpl(BookingApiService bookingApiService, AuthManager authManager) {
+    public BookingRepositoryImpl(BookingApiService bookingApiService) {
         this.bookingApiService = bookingApiService;
-        this.authManager = authManager;
     }
 
     @Override
-    public void bookHotel(BookingDetails bookingDetails, ApiCallback callback) {
+    public void bookHotel(BookingDetails bookingDetails, ApiCallback<String> callback) {
         Call<String> call = bookingApiService.bookHotel(bookingDetails);
         call.enqueue(new Callback<String>() {
             @Override
@@ -48,12 +46,13 @@ public class BookingRepositoryImpl implements BookingRepository {
                     callback.onSuccess(response.body());
                 } else {
                     try {
-                        callback.onFailure("Sign up failed. Error: " + response.errorBody().string());
+                        callback.onFailure("Error: " + response.errorBody().string());
                     } catch (IOException e) {
-                        callback.onFailure("Sign up failed. Error: " + e.getMessage());
+                        callback.onFailure("Error: " + e.getMessage());
                     }
                 }
             }
+
             @Override
             public void onFailure(Call<String> call, Throwable t) {
                 callback.onFailure(t.getMessage());
@@ -62,12 +61,50 @@ public class BookingRepositoryImpl implements BookingRepository {
     }
 
     @Override
-    public void getBookingHistory(ApiCallback callback) {
+    public void getBookingHistory(int userId, ApiCallback<List<BookingDetails>> callback) {
+        Call<List<BookingDetails>> call = bookingApiService.getBookedHotels(userId);
+        call.enqueue(new Callback<List<BookingDetails>>() {
+            @Override
+            public void onResponse(Call<List<BookingDetails>> call, Response<List<BookingDetails>> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.body());
+                } else {
+                    try {
+                        callback.onFailure("Error: " + response.errorBody().string());
+                    } catch (IOException e) {
+                        callback.onFailure("Error: " + e.getMessage());
+                    }
+                }
+            }
 
+            @Override
+            public void onFailure(Call<List<BookingDetails>> call, Throwable t) {
+                callback.onFailure("Error: " + t.getMessage());
+            }
+        });
     }
 
     @Override
-    public void removeBookedHotel(String hotelName, String bookId, ApiCallback callback) {
+    public void removeBookedHotel(int bookId, ApiCallback<String> callback) {
+        Call<String> call = bookingApiService.cancelBooking(bookId);
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.body());
+                } else {
+                    try {
+                        callback.onFailure("Error: " + response.errorBody().string());
+                    } catch (IOException e) {
+                        callback.onFailure("Error: " + e.getMessage());
+                    }
+                }
+            }
 
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                callback.onFailure("Error: " + t.getMessage());
+            }
+        });
     }
 }

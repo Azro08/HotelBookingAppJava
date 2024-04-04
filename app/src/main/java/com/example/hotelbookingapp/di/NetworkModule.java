@@ -1,13 +1,13 @@
 package com.example.hotelbookingapp.di;
 
 import com.example.hotelbookingapp.data.api.AuthService;
+import com.example.hotelbookingapp.data.api.BookingApiService;
+import com.example.hotelbookingapp.data.api.FavoriteHotelsApiService;
 import com.example.hotelbookingapp.data.api.HotelDetailsApi;
 import com.example.hotelbookingapp.data.api.HotelsListApi;
 import com.example.hotelbookingapp.data.api.LocationGeoIdApi;
 import com.example.hotelbookingapp.helper.Constants;
 import com.google.gson.GsonBuilder;
-
-import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
@@ -22,10 +22,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public abstract class NetworkModule {
 
     @Provides
-    @Singleton
     public static LocationGeoIdApi provideGeoIdApi() {
         return new Retrofit.Builder()
-                .baseUrl(Constants.BASE_URL)
+                .baseUrl(Constants.HOTELS_PROVIDER_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
@@ -33,10 +32,9 @@ public abstract class NetworkModule {
     }
 
     @Provides
-    @Singleton
     public static HotelsListApi provideHotelsListApi() {
         return new Retrofit.Builder()
-                .baseUrl(Constants.BASE_URL)
+                .baseUrl(Constants.HOTELS_PROVIDER_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
@@ -44,10 +42,9 @@ public abstract class NetworkModule {
     }
 
     @Provides
-    @Singleton
     public static HotelDetailsApi provideHotelDetailsApi() {
         return new Retrofit.Builder()
-                .baseUrl(Constants.BASE_URL)
+                .baseUrl(Constants.HOTELS_PROVIDER_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
@@ -55,13 +52,30 @@ public abstract class NetworkModule {
     }
 
     @Provides
-    @Singleton
     public static AuthService provideAuthService() {
         return new Retrofit.Builder()
-                .baseUrl("http://192.168.100.38:8082")
+                .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().setLenient().create()))
                 .build()
                 .create(AuthService.class);
+    }
+
+    @Provides
+    public static BookingApiService provideBookingApiService(){
+        return new  Retrofit.Builder()
+                .baseUrl(Constants.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().setLenient().create()))
+                .build()
+                .create(BookingApiService.class);
+    }
+
+    @Provides
+    public static FavoriteHotelsApiService provideFavoriteHotelsApiService(){
+        return new  Retrofit.Builder()
+                .baseUrl(Constants.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().setLenient().create()))
+                .build()
+                .create(FavoriteHotelsApiService.class);
     }
 
 }
