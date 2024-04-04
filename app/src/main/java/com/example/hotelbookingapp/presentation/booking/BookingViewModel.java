@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.hotelbookingapp.data.dto.hotel_booking.BookingDetails;
-import com.example.hotelbookingapp.domain.repository.BookingRepository;
+import com.example.hotelbookingapp.data.repository.BookingRepository;
 import com.example.hotelbookingapp.helper.ApiCallback;
 
 import javax.inject.Inject;

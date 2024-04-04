@@ -4,8 +4,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.hotelbookingapp.data.dto.hotel_booking.BookingDetails;
-import com.example.hotelbookingapp.data.repository.BookingRepositoryImpl;
-import com.example.hotelbookingapp.domain.repository.BookingRepository;
+import com.example.hotelbookingapp.data.repository.BookingRepository;
 
 import java.io.IOException;
 import java.util.List;
@@ -31,7 +30,7 @@ public class HistoryViewModel extends ViewModel {
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Inject
-    public HistoryViewModel(BookingRepositoryImpl bookingRepository) {
+    public HistoryViewModel(BookingRepository bookingRepository) {
         this.bookingRepository = bookingRepository;
     }
 
