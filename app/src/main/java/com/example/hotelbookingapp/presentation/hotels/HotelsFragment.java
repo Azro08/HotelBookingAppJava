@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -129,6 +130,13 @@ public class HotelsFragment extends Fragment {
         SingleHotelItem hotel = new SingleHotelItem(userId, hotelId, name, neighborhood, price, imageUrl, reviews);
         Log.d("hotelItem", hotel.toString());
         viewModel.addToFavorites(hotel);
+
+        viewModel.getAddToFavState().observe(getViewLifecycleOwner(), response -> {
+            if (response != null) Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
+            else
+                Toast.makeText(getContext(), viewModel.getAddToFavError(), Toast.LENGTH_SHORT).show();
+        });
+
     }
 
     private void navToDetails(Property data) {

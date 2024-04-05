@@ -21,7 +21,7 @@ public interface FavoriteHotelsApiService {
             "Content-Type: application/json"
     )
     Call<String> saveHotel(
-            @Header("Authorization") String token,
+//            @Header("Authorization") String token,
             @Body SingleHotelItem favoriteHotel
             );
 

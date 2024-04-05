@@ -3,6 +3,7 @@ package com.example.hotelbookingapp.presentation.hotels;
 
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -35,6 +36,19 @@ public class HotelsListViewModel extends ViewModel {
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
     private final MutableLiveData<Observable<HotelResponse>> hotelsList = new MutableLiveData<>();
     private final MutableLiveData<String> responseError = new MutableLiveData<>();
+
+    private final MutableLiveData<String> addToFavState = new MutableLiveData<>();
+
+    private String addToFavError = "Error adding to favorites";
+
+    public String getAddToFavError(){
+        return addToFavError;
+    }
+
+    public LiveData<String> getAddToFavState() {
+        return addToFavState;
+    }
+
 
     @Inject
     public HotelsListViewModel(
@@ -119,12 +133,12 @@ public class HotelsListViewModel extends ViewModel {
         favoriteHotelsRepository.saveToFavorite(hotel, new ApiCallback<String>() {
             @Override
             public void onSuccess(String responseBody) {
-
+                addToFavState.postValue(responseBody);
             }
 
             @Override
             public void onFailure(String errorMessage) {
-
+                addToFavError = errorMessage;
             }
         });
     }
