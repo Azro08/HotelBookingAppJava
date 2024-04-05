@@ -16,21 +16,22 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 public class LoginViewModel extends ViewModel {
     private final AuthRepository authRepository;
     private final MutableLiveData<User> userResponse = new MutableLiveData<>();
+    private final MutableLiveData<String> auth_token = new MutableLiveData<>();
     private String loginError = "";
-    private String auth_token = "";
 
     @Inject
     public LoginViewModel(AuthRepository authRepository) {
         this.authRepository = authRepository;
     }
 
-    public String getAuth_token() {
+    public LiveData<String> getAuth_token() {
         return auth_token;
     }
 
     public LiveData<User> getUseResponse() {
         return userResponse;
     }
+
     public String getLoginErrorResponse() {
         return loginError;
     }
@@ -43,7 +44,7 @@ public class LoginViewModel extends ViewModel {
                 authRepository.authenticate(user, new ApiCallback<String>() {
                     @Override
                     public void onSuccess(String responseBody) {
-                        auth_token = responseBody;
+                        auth_token.postValue(responseBody);
                     }
 
                     @Override

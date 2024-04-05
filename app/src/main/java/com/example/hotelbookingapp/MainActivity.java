@@ -2,6 +2,7 @@ package com.example.hotelbookingapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -17,7 +18,6 @@ import com.example.hotelbookingapp.databinding.ActivityMainBinding;
 import com.example.hotelbookingapp.helper.AuthManager;
 import com.example.hotelbookingapp.presentation.auth.AuthenticationActivity;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -29,8 +29,6 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
-    @Inject
-    FirebaseAuth firebaseAuth;
     @Inject
     AuthManager authManager;
     private ActivityMainBinding binding;
@@ -44,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         Objects.requireNonNull(getSupportActionBar()).hide();
-
         if (!authManager.isLoggedIn()) {
             startActivity(new Intent(this, AuthenticationActivity.class));
             finish();

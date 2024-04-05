@@ -18,9 +18,9 @@ import com.example.hotelbookingapp.MainActivity;
 import com.example.hotelbookingapp.R;
 import com.example.hotelbookingapp.data.dto.user.User;
 import com.example.hotelbookingapp.databinding.FragmentLoginBinding;
+import com.example.hotelbookingapp.domain.model.UserRole;
 import com.example.hotelbookingapp.helper.AuthManager;
 import com.example.hotelbookingapp.presentation.admin.AdminActivity;
-import com.google.firebase.auth.FirebaseAuth;
 
 import javax.inject.Inject;
 
@@ -28,8 +28,6 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class LoginFragment extends Fragment {
-    @Inject
-    FirebaseAuth firebaseAuth;
     @Inject
     AuthManager authManager;
     private FragmentLoginBinding binding;
@@ -58,7 +56,7 @@ public class LoginFragment extends Fragment {
         User user = new User();
         user.setEmail(email);
         user.setPassword(password);
-//        user.setRole("ADMIN_ROLE");
+//        user.setRole(UserRole.user_role.name());
         viewModel.login(user);
         viewModel.getUseResponse().observe(getViewLifecycleOwner(), userResponse -> {
 //            switch (userRoleResponse){
@@ -78,21 +76,31 @@ public class LoginFragment extends Fragment {
 //                    break;
 //
 //            }
-            Log.d("Login", viewModel.getLoginErrorResponse());
-            String auth_token = viewModel.getAuth_token();
-            if (userResponse.getRole().equals("ROLE_USER")) {
-                Log.d("Login", userResponse.toString());
-                authManager.saveUser(email, userResponse.getRole(), userResponse.getId(), auth_token);
-                startActivity(new Intent(getActivity(), MainActivity.class));
-            } else if (userResponse.getRole().equals("ROLE_ADMIN")) {
-                Log.d("Login", userResponse.toString());
-                authManager.saveUser(email, userResponse.getRole(), userResponse.getId(), auth_token);
-                startActivity(new Intent(getActivity(), AdminActivity.class));
-            } else {
-                Log.d("Login", userResponse.toString());
-                Toast.makeText(requireContext(), "Invalid Credentials", Toast.LENGTH_SHORT).show();
-            }
+            Log.d("Login", userResponse.getRole());
+            viewModel.getAuth_token().observe(getViewLifecycleOwner(), authTokenResponse ->{
+                if (userResponse.getRole().equals(UserRole.ROLE_USER.name())) {
+                    Log.d("LoginUser", userResponse.toString());
+                    saveUser(email, userResponse.getRole(), userResponse.getId(), authTokenResponse);
+                    startActivity(new Intent(getActivity(), MainActivity.class));
+                } else if (userResponse.getRole().equals(UserRole.ROLE_ADMIN.name())) {
+                    Log.d("LoginAdmin", userResponse.toString());
+                    saveUser(email, userResponse.getRole(), userResponse.getId(), authTokenResponse);
+                    startActivity(new Intent(getActivity(), AdminActivity.class));
+                } else {
+                    Log.d("LoginFailed", userResponse.toString());
+                    Toast.makeText(requireContext(), "Invalid Credentials", Toast.LENGTH_SHORT).show();
+                }
+            });
+
         });
+    }
+
+    private void saveUser(String email, String role, int id, String authToken) {
+        Log.d("LoginSavedUser", email + " " + role + " " + id + " " + authToken);
+        authManager.saveUserEmail(email);
+        authManager.saveRole(role);
+        authManager.saveUserId(id);
+        authManager.saveUserToken(authToken);
     }
 
     @Override

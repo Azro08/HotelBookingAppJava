@@ -4,22 +4,20 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.hotelbookingapp.data.dto.user.User;
 import com.example.hotelbookingapp.databinding.FragmentSignUpBinding;
-import com.google.firebase.auth.FirebaseAuth;
-
-import javax.inject.Inject;
+import com.example.hotelbookingapp.domain.model.UserRole;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class SignUpFragment extends Fragment {
-    @Inject
-    FirebaseAuth firebaseAuth;
     private FragmentSignUpBinding binding;
     private SignupViewModel viewModel;
 
@@ -47,8 +45,16 @@ public class SignUpFragment extends Fragment {
             User newUser = new User();
             newUser.setEmail(email);
             newUser.setPassword(password);
-            newUser.setRole("ROLE_USER");
+            newUser.setRole(UserRole.ROLE_USER.name());
             viewModel.signup(newUser);
+            viewModel.getSignUpResponse().observe(getViewLifecycleOwner(), signupResponse -> {
+                if (signupResponse != null) {
+                    Toast.makeText(getContext(), "Signup Success", Toast.LENGTH_SHORT).show();
+                    NavHostFragment.findNavController(this).popBackStack();
+                } else {
+                    binding.editTextSignupEmail.setError("Signup Failed");
+                }
+            });
         }
     }
 

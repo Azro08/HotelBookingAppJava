@@ -8,9 +8,10 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.hotelbookingapp.data.dto.hotel.HotelResponse;
 import com.example.hotelbookingapp.data.dto.hotel.SingleHotelItem;
-import com.example.hotelbookingapp.domain.repository.FavoriteHotelsRepository;
-import com.example.hotelbookingapp.domain.repository.HotelsListRepository;
-import com.example.hotelbookingapp.domain.repository.RegionIdRepository;
+import com.example.hotelbookingapp.data.repository.FavoriteHotelsRepository;
+import com.example.hotelbookingapp.data.repository.HotelsListRepository;
+import com.example.hotelbookingapp.data.repository.RegionIdRepository;
+import com.example.hotelbookingapp.helper.ApiCallback;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -115,7 +116,17 @@ public class HotelsListViewModel extends ViewModel {
     }
 
     public void addToFavorites(SingleHotelItem hotel) {
-        favoriteHotelsRepository.saveHotelToFavorites(hotel);
+        favoriteHotelsRepository.saveToFavorite(hotel, new ApiCallback<String>() {
+            @Override
+            public void onSuccess(String responseBody) {
+
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+
+            }
+        });
     }
 
     @Override

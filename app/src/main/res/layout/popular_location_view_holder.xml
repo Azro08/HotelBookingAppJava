@@ -7,14 +7,14 @@
     android:layout_margin="10dp">
 
     <ImageView
-        android:hotelId="@+hotelId/imageViewPopCity"
+        android:id="@+id/imageViewPopCity"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:background="@drawable/barcelona"
         android:importantForAccessibility="no" />
 
     <TextView
-        android:hotelId="@+hotelId/textViewPopCityName"
+        android:id="@+id/textViewPopCityName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"

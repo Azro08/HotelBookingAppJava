@@ -12,11 +12,11 @@ public class AuthManager {
     }
 
     public boolean isLoggedIn() {
-        String authToken = getUser();
-        return !authToken.isEmpty();
+        String email = getUserEmail();
+        return !email.isEmpty();
     }
 
-    private String getUser() {
+    private String getUserEmail() {
         SharedPreferences sharedPreferences =
                 context.getSharedPreferences(Constants.SHARED_PREF_NAME, Context.MODE_PRIVATE);
         sharedPreferences.getString(Constants.USER_KEY, "");
@@ -40,20 +40,39 @@ public class AuthManager {
     public int getUserId() {
         SharedPreferences sharedPreferences =
                 context.getSharedPreferences(Constants.SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        sharedPreferences.getInt(Constants.USER_ID_KEY, 0);
-        return sharedPreferences.getInt(Constants.USER_ID_KEY, 0);
+        // Retrieve the integer value from SharedPreferences
+        int userId = sharedPreferences.getInt(Constants.USER_ID_KEY, 0); // Default value is 0 if not found
+        // Return the retrieved value
+        return userId;
     }
 
-    public void saveUser(String email, String role, int id, String jwtToke) {
+
+
+    public void saveUserEmail(String email) {
         SharedPreferences sharedPreferences =
                 context.getSharedPreferences(Constants.SHARED_PREF_NAME, Context.MODE_PRIVATE);
         sharedPreferences.edit()
                 .putString(Constants.USER_KEY, email)
-                .putInt(Constants.USER_ID_KEY, id)
-                .putString(Constants.TOKEN_KEY, jwtToke)
-                .putString(Constants.ROLE_KEY, role)
                 .apply();
     }
+
+    public void saveUserId(int id) {
+        SharedPreferences sharedPreferences =
+                context.getSharedPreferences(Constants.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        sharedPreferences.edit()
+                .putInt(Constants.USER_ID_KEY, id)
+                .apply();
+    }
+
+
+    public void saveUserToken(String jwtToken) {
+        SharedPreferences sharedPreferences =
+                context.getSharedPreferences(Constants.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        sharedPreferences.edit()
+                .putString(Constants.TOKEN_KEY, jwtToken)
+                .apply();
+    }
+
 
     public void saveRole(String role) {
         SharedPreferences sharedPreferences =

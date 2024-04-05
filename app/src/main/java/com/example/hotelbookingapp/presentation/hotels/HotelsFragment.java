@@ -18,8 +18,8 @@ import com.example.hotelbookingapp.data.dto.hotel.HotelResponse;
 import com.example.hotelbookingapp.data.dto.hotel.Property;
 import com.example.hotelbookingapp.data.dto.hotel.SingleHotelItem;
 import com.example.hotelbookingapp.databinding.FragmentHotelsBinding;
+import com.example.hotelbookingapp.helper.AuthManager;
 import com.example.hotelbookingapp.helper.Constants;
-import com.google.firebase.auth.FirebaseAuth;
 
 import javax.inject.Inject;
 
@@ -29,7 +29,7 @@ import io.reactivex.disposables.Disposable;
 @AndroidEntryPoint
 public class HotelsFragment extends Fragment {
     @Inject
-    FirebaseAuth firebaseAuth;
+    AuthManager authManager;
     private FragmentHotelsBinding binding;
     private HotelsRvAdapter rvAdapter;
 
@@ -119,7 +119,7 @@ public class HotelsFragment extends Fragment {
 
     private void addHotelToFav(Property property) {
         String hotelId = property.getId();
-        String userId = firebaseAuth.getUid();
+        int userId = 2;
         String imageUrl = property.getPropertyImage().getImage().getUrl();
         double reviews = property.getReviews().getScore();
         String name = property.getName();

@@ -2,24 +2,24 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:hotelId="@+hotelId/auth_nav_graph"
-    app:startDestination="@hotelId/loginFragment">
+    android:id="@+id/auth_nav_graph"
+    app:startDestination="@id/loginFragment">
     <fragment
-        android:hotelId="@+hotelId/loginFragment"
+        android:id="@+id/loginFragment"
         android:name="com.example.hotelbookingapp.presentation.auth.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
-            android:hotelId="@+hotelId/nav_to_signup"
-            app:destination="@hotelId/signUpFragment" />
+            android:id="@+id/nav_to_signup"
+            app:destination="@id/signUpFragment" />
     </fragment>
     <fragment
-        android:hotelId="@+hotelId/signUpFragment"
+        android:id="@+id/signUpFragment"
         android:name="com.example.hotelbookingapp.presentation.auth.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up" >
         <action
-            android:hotelId="@+hotelId/nav_to_login"
-            app:destination="@hotelId/loginFragment" />
+            android:id="@+id/nav_to_login"
+            app:destination="@id/loginFragment" />
     </fragment>
 </navigation>

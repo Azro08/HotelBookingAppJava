@@ -2,22 +2,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:hotelId="@+hotelId/navHome"
+        android:id="@+id/navHome"
         android:title="@string/home"
         android:icon="@drawable/home_icon"/>
 
     <item
-        android:hotelId="@+hotelId/navHistory"
+        android:id="@+id/navHistory"
         android:title="@string/history"
         android:icon="@drawable/history_icon"/>
 
     <item
-        android:hotelId="@+hotelId/navFavorite"
+        android:id="@+id/navFavorite"
         android:title="@string/favorite"
         android:icon="@drawable/favorite_icon"/>
 
     <item
-        android:hotelId="@+hotelId/navProfile"
+        android:id="@+id/navProfile"
         android:title="@string/profile"
         android:icon="@drawable/profile_icon"/>
 

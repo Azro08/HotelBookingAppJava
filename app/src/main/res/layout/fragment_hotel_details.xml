@@ -7,14 +7,14 @@
     tools:context=".presentation.hotel_details.HotelDetailsFragment">
 
     <pl.droidsonroids.gif.GifImageView
-        android:hotelId="@+hotelId/loadingDetailsGif"
+        android:id="@+id/loadingDetailsGif"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center"
         android:background="@drawable/loading_gif"/>
 
     <TextView
-        android:hotelId="@+hotelId/textViewError"
+        android:id="@+id/textViewError"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
@@ -25,7 +25,7 @@
         tools:text="Error" />
 
     <Button
-        android:hotelId="@+hotelId/buttonRefresh"
+        android:id="@+id/buttonRefresh"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:visibility="gone"
@@ -39,7 +39,7 @@
         android:layout_marginBottom="80dp">
 
         <LinearLayout
-            android:hotelId="@+hotelId/layoutDetailsContainer"
+            android:id="@+id/layoutDetailsContainer"
             android:visibility="gone"
             android:background="@color/gray"
             android:layout_width="match_parent"
@@ -50,13 +50,13 @@
 
             <!-- Hotel Images (ViewPager) -->
             <androidx.viewpager.widget.ViewPager
-                android:hotelId="@+hotelId/viewPagerHotelImages"
+                android:id="@+id/viewPagerHotelImages"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"/>
 
             <!-- Hotel Name -->
             <TextView
-                android:hotelId="@+hotelId/textHotelName"
+                android:id="@+id/textHotelName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="Hotel Name"
@@ -66,7 +66,7 @@
 
             <!-- Address -->
             <TextView
-                android:hotelId="@+hotelId/textAddress"
+                android:id="@+id/textAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
@@ -75,7 +75,7 @@
 
             <!-- Hotel Details -->
             <TextView
-                android:hotelId="@+hotelId/textHotelDetails"
+                android:id="@+id/textHotelDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
@@ -84,7 +84,7 @@
 
             <!-- Phone Number -->
             <TextView
-                android:hotelId="@+hotelId/textPhoneNumber"
+                android:id="@+id/textPhoneNumber"
                 android:layout_width="wrap_content"
                 android:textColor="@color/black"
                 android:layout_height="wrap_content"
@@ -93,7 +93,7 @@
 
             <!-- Tagline -->
             <TextView
-                android:hotelId="@+hotelId/textTagline"
+                android:id="@+id/textTagline"
                 android:layout_width="wrap_content"
                 android:textColor="@color/black"
                 android:layout_height="wrap_content"
@@ -102,7 +102,7 @@
 
             <!-- Review -->
             <RatingBar
-                android:hotelId="@+hotelId/ratingBar"
+                android:id="@+id/ratingBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:progressTint="@color/yellow"
@@ -113,7 +113,7 @@
 
             <!-- What's Around -->
             <TextView
-                android:hotelId="@+hotelId/textWhatsAround"
+                android:id="@+id/textWhatsAround"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="@string/what_s_around"
@@ -121,7 +121,7 @@
 
             <!-- Book Now Button -->
             <Button
-                android:hotelId="@+hotelId/buttonBookNow"
+                android:id="@+id/buttonBookNow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/book_now"

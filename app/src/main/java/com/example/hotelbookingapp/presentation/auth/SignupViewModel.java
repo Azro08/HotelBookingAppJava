@@ -18,18 +18,15 @@ public class SignupViewModel extends ViewModel {
     private final MutableLiveData<String> signUpResponse = new MutableLiveData<>();
     private final MutableLiveData<String> loginError = new MutableLiveData<>();
 
+    public LiveData<String> getSignUpResponse() {
+        return signUpResponse;
+    }
 
     @Inject
     public SignupViewModel(AuthRepository authRepository) {
         this.authRepository = authRepository;
     }
 
-    public LiveData<String> getUserRoleResponse() {
-        return signUpResponse;
-    }
-    public LiveData<String> getLoginErrorResponse() {
-        return loginError;
-    }
 
     public void signup(User user) {
         authRepository.signup(user, new ApiCallback<String>() {

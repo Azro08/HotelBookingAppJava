@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.hotelbookingapp.data.dto.hotel_details.HotelDetailsResponse;
-import com.example.hotelbookingapp.domain.repository.HotelDetailsRepository;
+import com.example.hotelbookingapp.data.repository.HotelDetailsRepository;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -53,8 +53,7 @@ public class HotelDetailsViewModel extends ViewModel {
                         },
 
                         error -> {
-                            if (error instanceof HttpException) {
-                                HttpException httpException = (HttpException) error;
+                            if (error instanceof HttpException httpException) {
                                 if (httpException.response() != null && Objects.requireNonNull(httpException.response()).errorBody() != null) {
                                     String errorResponse = Objects.requireNonNull(Objects.requireNonNull(httpException.response()).errorBody()).string();
                                     responseError.postValue(errorResponse);

@@ -15,7 +15,7 @@
         android:importantForAccessibility="no" />
 
     <Button
-        android:hotelId="@+hotelId/buttonLogout"
+        android:id="@+id/buttonLogout"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:text="@string/logout"

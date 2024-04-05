@@ -9,7 +9,7 @@
     tools:context=".presentation.booking.BookingFragment">
 
     <TextView
-        android:hotelId="@+hotelId/textViewHotelName"
+        android:id="@+id/textViewHotelName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -20,7 +20,7 @@
 
     <!-- Edit Text: First Name -->
     <EditText
-        android:hotelId="@+hotelId/editTextFirstName"
+        android:id="@+id/editTextFirstName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/first_name"
@@ -29,7 +29,7 @@
 
     <!-- Edit Text: Last Name -->
     <EditText
-        android:hotelId="@+hotelId/editTextLastName"
+        android:id="@+id/editTextLastName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/last_name"
@@ -39,7 +39,7 @@
 
     <!-- Edit Text: Adults Number -->
     <EditText
-        android:hotelId="@+hotelId/editTextAdultsNumber"
+        android:id="@+id/editTextAdultsNumber"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/adults_num"
@@ -49,7 +49,7 @@
 
     <!-- Edit Text: Children Number -->
     <EditText
-        android:hotelId="@+hotelId/editTextChildrenNumber"
+        android:id="@+id/editTextChildrenNumber"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/children_num"
@@ -59,7 +59,7 @@
 
     <!-- Edit Text: Phone Number -->
     <EditText
-        android:hotelId="@+hotelId/editTextPhoneNumber"
+        android:id="@+id/editTextPhoneNumber"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/phone_number"
@@ -69,7 +69,7 @@
 
     <!-- Edit Text: Email -->
     <EditText
-        android:hotelId="@+hotelId/editTextEmail"
+        android:id="@+id/editTextEmail"
         android:textColor="@color/black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -91,7 +91,7 @@
             android:text="@string/from" />
 
         <ImageButton
-            android:hotelId="@+hotelId/imageButtonDateFrom"
+            android:id="@+id/imageButtonDateFrom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -99,7 +99,7 @@
             android:importantForAccessibility="no" />
 
         <TextView
-            android:hotelId="@+hotelId/textViewCheckInDate"
+            android:id="@+id/textViewCheckInDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="2023-10-11" />
@@ -113,7 +113,7 @@
 
 
         <ImageButton
-            android:hotelId="@+hotelId/imageButtonDateTo"
+            android:id="@+id/imageButtonDateTo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
@@ -121,7 +121,7 @@
             android:importantForAccessibility="no" />
 
         <TextView
-            android:hotelId="@+hotelId/textViewCheckOutDate"
+            android:id="@+id/textViewCheckOutDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="2023-10-11" />
@@ -132,20 +132,20 @@
 
     <!-- Radio Group: Payment Type -->
     <RadioGroup
-        android:hotelId="@+hotelId/radioGroupPaymentType"
+        android:id="@+id/radioGroupPaymentType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <RadioButton
-            android:hotelId="@+hotelId/radioButtonCash"
+            android:id="@+id/radioButtonCash"
             android:layout_width="wrap_content"
             android:textColor="@color/black"
             android:layout_height="wrap_content"
             android:text="@string/cash" />
 
         <RadioButton
-            android:hotelId="@+hotelId/radioButtonCreditCard"
+            android:id="@+id/radioButtonCreditCard"
             android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -154,14 +154,14 @@
     </RadioGroup>
 
     <LinearLayout
-        android:hotelId="@+hotelId/layoutCardDetails"
+        android:id="@+id/layoutCardDetails"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <!-- Edit Text: Card Number -->
         <EditText
-            android:hotelId="@+hotelId/editTextCardNumber"
+            android:id="@+id/editTextCardNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/card_number"
@@ -170,7 +170,7 @@
 
         <!-- Edit Text: Expiry Date -->
         <EditText
-            android:hotelId="@+hotelId/editTextExpiryDate"
+            android:id="@+id/editTextExpiryDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/expiry_date"
@@ -179,7 +179,7 @@
 
         <!-- Edit Text: CVV -->
         <EditText
-            android:hotelId="@+hotelId/editTextCVV"
+            android:id="@+id/editTextCVV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/cvv"
@@ -189,7 +189,7 @@
     </LinearLayout>
 
     <Button
-        android:hotelId="@+hotelId/buttonFinish"
+        android:id="@+id/buttonFinish"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"

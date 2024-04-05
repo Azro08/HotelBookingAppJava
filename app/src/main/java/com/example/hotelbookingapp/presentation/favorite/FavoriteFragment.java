@@ -28,7 +28,6 @@ public class FavoriteFragment extends Fragment {
     private FragmentFavoriteBinding binding;
     private FavoriteHotelsRvAdapter rvAdapter;
     private FavoriteHotelsViewModel viewModel;
-    private Disposable subscription;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -44,19 +43,9 @@ public class FavoriteFragment extends Fragment {
     }
 
     private void viewModelOutputs() {
-        viewModel.getHotelsList().observe(getViewLifecycleOwner(), hotelResponseObservable -> {
-            if (hotelResponseObservable != null) {
-                subscription = hotelResponseObservable.subscribe(
-                        response -> {
-                            if (response != null && !response.isEmpty()) {
-                                displayHotels(response);
-                            } else {
-                                viewModel.getResponseError().observe(getViewLifecycleOwner(), this::handleError);
-                            }
-                        },
-                        error -> handleError(error.getMessage())
-                );
-            }
+        viewModel.getHotelsList().observe(getViewLifecycleOwner(), hotelResponse -> {
+            if (hotelResponse != null) displayHotels(hotelResponse);
+            else viewModel.getResponseError().observe(getViewLifecycleOwner(), this::handleError);
         });
         viewModel.getResponseError().observe(getViewLifecycleOwner(), this::handleError);
     }
@@ -103,9 +92,9 @@ public class FavoriteFragment extends Fragment {
     }
 
     private void refreshFragment() {
-       binding.swipeRefreshLayout.setRefreshing(false);
-       viewModel.refresh();
-       viewModelOutputs();
+        binding.swipeRefreshLayout.setRefreshing(false);
+        viewModel.refresh();
+        viewModelOutputs();
     }
 
     @Override
@@ -114,9 +103,6 @@ public class FavoriteFragment extends Fragment {
         binding = null;
         if (rvAdapter != null) {
             rvAdapter = null;
-        }
-        if (subscription != null && !subscription.isDisposed()) {
-            subscription.dispose();
         }
     }
 }

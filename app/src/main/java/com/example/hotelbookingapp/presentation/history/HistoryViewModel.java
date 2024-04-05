@@ -48,7 +48,7 @@ public class HistoryViewModel extends ViewModel {
     }
 
     private void getBookingHistory() {
-        bookingRepository.getBookingHistory(new ApiCallback<List<BookingDetails>>() {
+        bookingRepository.getBookingHistory(new ApiCallback<>() {
             @Override
             public void onSuccess(List<BookingDetails> responseBody) {
                 bookingListResponse.postValue(responseBody);
@@ -66,7 +66,7 @@ public class HistoryViewModel extends ViewModel {
     }
 
     public void removeBookedHotel(int bookId) {
-        bookingRepository.cancelBooking(bookId, new ApiCallback<String>() {
+        bookingRepository.cancelBooking(bookId, new ApiCallback<>() {
             @Override
             public void onSuccess(String responseBody) {
                 cancelBookingState.postValue(responseBody);

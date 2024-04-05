@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment;
 import com.example.hotelbookingapp.databinding.FragmentProfileBinding;
 import com.example.hotelbookingapp.helper.AuthManager;
 import com.example.hotelbookingapp.presentation.auth.AuthenticationActivity;
-import com.google.firebase.auth.FirebaseAuth;
 
 import javax.inject.Inject;
 
@@ -22,8 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class ProfileFragment extends Fragment {
     @Inject
     AuthManager authManager;
-    @Inject
-    FirebaseAuth firebaseAuth;
+
     private FragmentProfileBinding binding;
 
     @Override
@@ -35,7 +33,6 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         binding.buttonLogout.setOnClickListener(v -> {
-            firebaseAuth.signOut();
             authManager.removeUser();
             requireActivity().startActivity(
                     new Intent(requireContext(), AuthenticationActivity.class)

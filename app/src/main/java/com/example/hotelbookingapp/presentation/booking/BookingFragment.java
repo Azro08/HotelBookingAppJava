@@ -32,8 +32,6 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class BookingFragment extends Fragment {
-    @Inject
-    FirebaseAuth firebaseAuth;
     private FragmentBookingBinding binding;
     private BookingViewModel viewModel;
     @Inject
