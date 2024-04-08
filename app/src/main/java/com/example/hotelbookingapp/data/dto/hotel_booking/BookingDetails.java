@@ -1,7 +1,7 @@
 package com.example.hotelbookingapp.data.dto.hotel_booking;
 
 public class BookingDetails {
-    private int bookId;
+    private int id;
     private String hotelName;
     private int userId;
     private String firstName;
@@ -15,15 +15,17 @@ public class BookingDetails {
     private String paymentType;
     private CardDetails cardDetails;
     private double totalPrice;
+    private boolean isApproved;
+
 
     public BookingDetails() {
         // Default constructor required for Gson serialization
     }
 
-    public BookingDetails(int bookId, String hotelName, int userId, String firstName, String lastName, String email,
+    public BookingDetails(int id, String hotelName, int userId, String firstName, String lastName, String email,
                           String phoneNum, String checkInDate, String checkOutDate, int adultNumber, int childrenNum,
-                          String paymentType, CardDetails cardDetails, double totalPrice) {
-        this.bookId = bookId;
+                          String paymentType, CardDetails cardDetails, double totalPrice, boolean isApproved) {
+        this.id = id;
         this.hotelName = hotelName;
         this.userId = userId;
         this.firstName = firstName;
@@ -37,6 +39,7 @@ public class BookingDetails {
         this.paymentType = paymentType;
         this.cardDetails = cardDetails;
         this.totalPrice = totalPrice;
+        this.isApproved = isApproved;
     }
 
     public String getHotelName() {
@@ -136,10 +139,18 @@ public class BookingDetails {
     }
 
     public int getBookId() {
-        return bookId;
+        return id;
     }
 
     public void setBookId(int bookId) {
-        this.bookId = bookId;
+        this.id = bookId;
+    }
+
+    public boolean isApproved() {
+        return isApproved;
+    }
+
+    public void setApproved(boolean approved) {
+        isApproved = approved;
     }
 }

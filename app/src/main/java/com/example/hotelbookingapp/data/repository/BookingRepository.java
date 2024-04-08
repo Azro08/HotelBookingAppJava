@@ -94,7 +94,8 @@ public class BookingRepository {
     }
 
     public void approveBooking(int bookId, ApiCallback<String> callback) {
-        Call<String> call = bookingApiService.approveBooking(bookId);
+        String token = authManager.getToken();
+        Call<String> call = bookingApiService.approveBooking(token, bookId);
 
         call.enqueue(new Callback<String>() {
             @Override

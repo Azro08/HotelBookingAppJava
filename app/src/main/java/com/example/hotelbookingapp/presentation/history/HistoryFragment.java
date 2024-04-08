@@ -2,9 +2,11 @@ package com.example.hotelbookingapp.presentation.history;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -13,8 +15,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.hotelbookingapp.data.dto.hotel_booking.BookingDetails;
 import com.example.hotelbookingapp.databinding.FragmentHistoryBinding;
+import com.example.hotelbookingapp.helper.AuthManager;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.disposables.Disposable;
@@ -25,6 +30,9 @@ public class HistoryFragment extends Fragment {
     private FragmentHistoryBinding binding;
     private HistoryViewModel viewModel;
     private RvBookingHistoryAdapter rvAdapter;
+
+    @Inject
+    AuthManager authManager;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -67,13 +75,26 @@ public class HistoryFragment extends Fragment {
         binding.loadingGif.setVisibility(View.GONE);
         binding.rvBookingHistory.setVisibility(View.VISIBLE);
         binding.textViewError.setVisibility(View.VISIBLE);
-        rvAdapter = new RvBookingHistoryAdapter(data, this::showConfirmationDialog);
+        Log.d("HistoryFragment", "displayHistory: " + data.get(0).getBookId());
+        rvAdapter = new RvBookingHistoryAdapter(authManager.getUserRole(), data, this::showConfirmationDialog, this::approveBooking);
         binding.rvBookingHistory.setHasFixedSize(true);
         binding.rvBookingHistory.setLayoutManager(new LinearLayoutManager(requireContext()));
         binding.rvBookingHistory.setAdapter(rvAdapter);
     }
 
+    private void approveBooking(int id) {
+        Log.d("HistoryFragment", "approveBooking: " + id);
+        viewModel.approveBooking(id);
+        viewModel.getApproveBookingState().observe(getViewLifecycleOwner(), response -> {
+            if (response != null)
+                Toast.makeText(requireContext(), "Approved", Toast.LENGTH_SHORT).show();
+            else Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show();
+        });
+        viewModel.refresh();
+    }
+
     private void showConfirmationDialog(BookingDetails hotel) {
+        Log.d("HistoryFragment", "showConfirmationDialog: " + hotel.getBookId());
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         builder.setTitle("Are you sure you want to cancel?");
         builder.setPositiveButton("Yes", (dialog, which) -> {

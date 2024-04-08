@@ -1,5 +1,6 @@
 package com.example.hotelbookingapp.presentation.history;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -29,6 +30,11 @@ public class HistoryViewModel extends ViewModel {
             new MutableLiveData<>();
     private final MutableLiveData<String> responseError = new MutableLiveData<>();
     private final MutableLiveData<String> cancelBookingState = new MutableLiveData<>();
+    private final MutableLiveData<String> approveBookingState = new MutableLiveData<>();
+
+    public LiveData<String> getApproveBookingState() {
+        return approveBookingState;
+    }
 
     @Inject
     public HistoryViewModel(BookingRepository bookingRepository) {
@@ -77,4 +83,18 @@ public class HistoryViewModel extends ViewModel {
             }
         });
     }
+
+    public void approveBooking(int bookId) {
+        bookingRepository.approveBooking(bookId, new ApiCallback<>() {
+            @Override
+            public void onSuccess(String responseBody) {
+                approveBookingState.postValue(responseBody);
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+            }
+        });
+    }
+
 }

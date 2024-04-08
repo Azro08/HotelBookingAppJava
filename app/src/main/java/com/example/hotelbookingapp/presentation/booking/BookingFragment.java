@@ -112,7 +112,8 @@ public class BookingFragment extends Fragment {
         Log.d("BookingFragment", "Total price: " + totalPrice);
         BookingDetails bookingDetails = new BookingDetails(
                 bookId, hotelName, userId, firstName, lastName, email, phoneNumber, checkInDate, checkOutDate,
-                adultsNumber, childrenNumber, paymentType, new CardDetails(cardNumber, expiryDate, cvv), totalPrice
+                adultsNumber, childrenNumber, paymentType, new CardDetails(cardNumber, expiryDate, cvv), totalPrice,
+                false
         );
 
         viewModel.bookHotel(bookingDetails);

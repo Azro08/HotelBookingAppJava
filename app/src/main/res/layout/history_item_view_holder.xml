@@ -37,13 +37,35 @@
             tools:text = "2023/10/2023"
             android:layout_marginStart="10dp"/>
 
+        <TextView
+            android:id="@+id/textViewBookingStat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text = "pending"
+            android:layout_marginStart="10dp"/>
+
     </LinearLayout>
 
-    <Button
-        android:id="@+id/buttonCancelBooking"
-        android:text="@string/cancel"
-        android:layout_gravity="center"
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center">
+
+        <Button
+            android:id="@+id/buttonCancelBooking"
+            android:text="@string/cancel"
+            android:backgroundTint="@color/red"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/buttonApproveBooking"
+            android:text="@string/approve"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+
+    </LinearLayout>
 
 </LinearLayout>
