@@ -14,7 +14,9 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.hotelbookingapp.databinding.ActivityMainBinding;
+import com.example.hotelbookingapp.domain.model.UserRole;
 import com.example.hotelbookingapp.helper.AuthManager;
+import com.example.hotelbookingapp.presentation.admin.AdminActivity;
 import com.example.hotelbookingapp.presentation.auth.AuthenticationActivity;
 import com.google.firebase.FirebaseApp;
 
@@ -44,6 +46,11 @@ public class MainActivity extends AppCompatActivity {
         if (!authManager.isLoggedIn()) {
             startActivity(new Intent(this, AuthenticationActivity.class));
             finish();
+        } else {
+            if (authManager.getUserRole().equals(UserRole.ROLE_ADMIN.name())){
+                startActivity(new Intent(this, AdminActivity.class));
+                finish();
+            }
         }
 
         setBottomNavBar();

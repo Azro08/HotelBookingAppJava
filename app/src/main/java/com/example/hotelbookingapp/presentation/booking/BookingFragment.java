@@ -2,6 +2,7 @@ package com.example.hotelbookingapp.presentation.booking;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -108,12 +109,18 @@ public class BookingFragment extends Fragment {
         int userId = authManager.getUserId();
         int bookId = generateRandomId();
         double totalPrice = calcTotalPrice(checkInDate, checkOutDate, adultsNumber, childrenNumber);
+        Log.d("BookingFragment", "Total price: " + totalPrice);
         BookingDetails bookingDetails = new BookingDetails(
                 bookId, hotelName, userId, firstName, lastName, email, phoneNumber, checkInDate, checkOutDate,
                 adultsNumber, childrenNumber, paymentType, new CardDetails(cardNumber, expiryDate, cvv), totalPrice
         );
 
         viewModel.bookHotel(bookingDetails);
+        if (viewModel.bookingError.isEmpty()) {
+            Toast.makeText(requireContext(), "Booked", Toast.LENGTH_SHORT).show();
+            NavHostFragment.findNavController(this).popBackStack();
+        }
+        else Toast.makeText(requireContext(), "Failed", Toast.LENGTH_SHORT).show();
         viewModel.getBookingResponse().observe(getViewLifecycleOwner(), bookingResponse -> {
             if (bookingResponse != null) {
                 Toast.makeText(requireContext(), "Status: " + bookingResponse, Toast.LENGTH_LONG).show();

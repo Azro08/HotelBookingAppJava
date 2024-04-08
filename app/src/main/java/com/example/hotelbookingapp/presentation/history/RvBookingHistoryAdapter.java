@@ -72,8 +72,12 @@ public class RvBookingHistoryAdapter extends RecyclerView.Adapter<RvBookingHisto
         }
 
         private boolean datePassed(String dateString) {
-            LocalDate date = LocalDate.parse(dateString);
-            return LocalDate.now().isAfter(date);
+            try {
+                LocalDate date = LocalDate.parse(dateString);
+                return LocalDate.now().isAfter(date);
+            } catch (Exception e) {
+                return false;
+            }
         }
     }
 }
