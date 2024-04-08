@@ -2,6 +2,7 @@ package com.example.hotelbookingapp.helper;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 public class AuthManager {
 
@@ -12,82 +13,64 @@ public class AuthManager {
     }
 
     public boolean isLoggedIn() {
-        String email = getUserEmail();
-        return !email.isEmpty();
+        String authToken = getUser();
+        return !authToken.isEmpty();
     }
 
-    private String getUserEmail() {
+    // Returns Email
+    private String getUser() {
         SharedPreferences sharedPreferences =
                 context.getSharedPreferences(Constants.SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        sharedPreferences.getString(Constants.USER_KEY, "");
         return sharedPreferences.getString(Constants.USER_KEY, "");
     }
 
-    public String getRole() {
+    public String getUserRole() {
         SharedPreferences sharedPreferences =
                 context.getSharedPreferences(Constants.SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        sharedPreferences.getString(Constants.ROLE_KEY, "");
         return sharedPreferences.getString(Constants.ROLE_KEY, "");
-    }
-
-    public String getToken() {
-        SharedPreferences sharedPreferences =
-                context.getSharedPreferences(Constants.SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        sharedPreferences.getString(Constants.TOKEN_KEY, "");
-        return sharedPreferences.getString(Constants.TOKEN_KEY, "");
     }
 
     public int getUserId() {
         SharedPreferences sharedPreferences =
                 context.getSharedPreferences(Constants.SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        // Retrieve the integer value from SharedPreferences
-        int userId = sharedPreferences.getInt(Constants.USER_ID_KEY, 0); // Default value is 0 if not found
-        // Return the retrieved value
-        return userId;
+        return sharedPreferences.getInt(Constants.USER_ID_KEY, 0);
     }
 
-
-
-    public void saveUserEmail(String email) {
+    public void saveToken(String token) {
         SharedPreferences sharedPreferences =
                 context.getSharedPreferences(Constants.SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        sharedPreferences.edit()
-                .putString(Constants.USER_KEY, email)
-                .apply();
+        sharedPreferences.edit().putString(Constants.TOKEN_KEY, token).apply();
     }
 
-    public void saveUserId(int id) {
+    public String getToken() {
         SharedPreferences sharedPreferences =
                 context.getSharedPreferences(Constants.SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        sharedPreferences.edit()
-                .putInt(Constants.USER_ID_KEY, id)
-                .apply();
+        return sharedPreferences.getString(Constants.TOKEN_KEY, "");
     }
 
-
-    public void saveUserToken(String jwtToken) {
+    public void removeToken() {
         SharedPreferences sharedPreferences =
                 context.getSharedPreferences(Constants.SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        sharedPreferences.edit()
-                .putString(Constants.TOKEN_KEY, jwtToken)
-                .apply();
+        sharedPreferences.edit().remove(Constants.TOKEN_KEY).apply();
     }
 
-
-    public void saveRole(String role) {
+    public void saveUser(String email, int id, String role) {
+        Log.d("AuthManager", "saveUser: " + email + "  " + id + "  " + role);
         SharedPreferences sharedPreferences =
                 context.getSharedPreferences(Constants.SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        sharedPreferences.edit().putString(Constants.USER_KEY, role).apply();
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(Constants.USER_KEY, email);
+        editor.putString(Constants.ROLE_KEY, role);
+        editor.putInt(Constants.USER_ID_KEY, id);
+        editor.apply();
     }
 
     public void removeUser() {
         SharedPreferences sharedPreferences =
                 context.getSharedPreferences(Constants.SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        sharedPreferences.edit()
-                .remove(Constants.USER_KEY)
-                .remove(Constants.ROLE_KEY)
-                .remove(Constants.TOKEN_KEY)
-                .remove(Constants.USER_ID_KEY)
-                .apply();
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(Constants.USER_KEY);
+        editor.remove(Constants.USER_ID_KEY);
+        editor.apply();
     }
 }

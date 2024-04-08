@@ -1,5 +1,7 @@
 package com.example.hotelbookingapp.presentation.auth;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -37,19 +39,22 @@ public class LoginViewModel extends ViewModel {
     }
 
     public void login(User user) {
-        authRepository.login(user, new ApiCallback<User>() {
+        authRepository.login(user, new ApiCallback<>() {
             @Override
             public void onSuccess(User responseBody) {
                 userResponse.postValue(responseBody);
-                authRepository.authenticate(user, new ApiCallback<String>() {
+                Log.d("LoginVM",responseBody.toString());
+                authRepository.authenticate(user, new ApiCallback<>() {
                     @Override
                     public void onSuccess(String responseBody) {
                         auth_token.postValue(responseBody);
+                        Log.d("LoginVM",responseBody);
                     }
 
                     @Override
                     public void onFailure(String errorMessage) {
-
+                        loginError = errorMessage;
+                        Log.d("LoginVM",errorMessage);
                     }
                 });
             }
@@ -57,6 +62,7 @@ public class LoginViewModel extends ViewModel {
             @Override
             public void onFailure(String errorMessage) {
                 loginError = errorMessage;
+                Log.d("LoginVM",errorMessage);
             }
         });
     }

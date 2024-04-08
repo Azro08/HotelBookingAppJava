@@ -26,7 +26,7 @@ public class FavoriteHotelsRepository {
 
     public void saveToFavorite(SingleHotelItem singleHotelItem, ApiCallback<String> callback) {
         Call<String> call = favoriteHotelsApiService.saveHotel( singleHotelItem);
-        call.enqueue(new Callback<String>() {
+        call.enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.isSuccessful()) {

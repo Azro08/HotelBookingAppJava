@@ -120,22 +120,24 @@ public class HotelsFragment extends Fragment {
 
     private void addHotelToFav(Property property) {
         String hotelId = property.getId();
-        int userId = 2;
+        int userId = authManager.getUserId();
         String imageUrl = property.getPropertyImage().getImage().getUrl();
         double reviews = property.getReviews().getScore();
         String name = property.getName();
         String price = property.getPrice().getDisplayMessages().get(0).getLineItems().get(0).getPrice().getPriceTag();
         String neighborhood = property.getNeighborhood() != null ? property.getNeighborhood().getName() : null;
 
-        SingleHotelItem hotel = new SingleHotelItem(userId, hotelId, name, neighborhood, price, imageUrl, reviews);
-        Log.d("hotelItem", hotel.toString());
+        SingleHotelItem hotel = new SingleHotelItem();
+        hotel.setHotelId(hotelId);
+        hotel.setUserId(userId);
+        hotel.setImageUrl(imageUrl);
+        hotel.setReview(reviews);
+        hotel.setName(name);
+        hotel.setPrice(price);
+        hotel.setNeighborhood(neighborhood);
         viewModel.addToFavorites(hotel);
-
-        viewModel.getAddToFavState().observe(getViewLifecycleOwner(), response -> {
-            if (response != null) Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
-            else
-                Toast.makeText(getContext(), viewModel.getAddToFavError(), Toast.LENGTH_SHORT).show();
-        });
+        if (viewModel.getAddToFavError().isEmpty()) Toast.makeText(getContext(), "Failed " + viewModel.getAddToFavError(), Toast.LENGTH_SHORT).show();
+        else Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
 
     }
 

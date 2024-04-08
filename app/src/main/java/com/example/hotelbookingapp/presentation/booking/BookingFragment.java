@@ -19,7 +19,6 @@ import com.example.hotelbookingapp.data.dto.hotel_booking.CardDetails;
 import com.example.hotelbookingapp.databinding.FragmentBookingBinding;
 import com.example.hotelbookingapp.helper.AuthManager;
 import com.example.hotelbookingapp.helper.Constants;
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

@@ -50,7 +50,7 @@ public class FavoriteHotelsViewModel extends ViewModel {
     }
 
     private void getFavoriteHotels() {
-        repository.getFavoriteHotels(new ApiCallback<List<SingleHotelItem>>() {
+        repository.getFavoriteHotels(new ApiCallback<>() {
             @Override
             public void onSuccess(List<SingleHotelItem> responseBody) {
                 hotelsList.postValue(responseBody);
@@ -58,16 +58,17 @@ public class FavoriteHotelsViewModel extends ViewModel {
 
             @Override
             public void onFailure(String errorMessage) {
-                responseError.postValue(errorMessage);
+                responseError.postValue("No saved hotels");
             }
         });
     }
 
     public void deleteHotelFromFav(String hotelId) {
-        repository.removeFromFavorite(hotelId, new ApiCallback<String>() {
+        Log.d("deleteHotel", hotelId);
+        repository.removeFromFavorite(hotelId, new ApiCallback<>() {
             @Override
             public void onSuccess(String responseBody) {
-
+                refresh();
             }
 
             @Override

@@ -1,5 +1,4 @@
 package com.example.hotelbookingapp.data.repository;
-
 import com.example.hotelbookingapp.data.api.BookingApiService;
 import com.example.hotelbookingapp.data.dto.hotel_booking.BookingDetails;
 import com.example.hotelbookingapp.helper.ApiCallback;

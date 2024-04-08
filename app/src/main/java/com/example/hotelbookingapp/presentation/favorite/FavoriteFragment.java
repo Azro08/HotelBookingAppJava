@@ -71,11 +71,12 @@ public class FavoriteFragment extends Fragment {
     }
 
 
-    private void showConfirmationDialog(String hotelName) {
+    private void showConfirmationDialog(String hotelId) {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         builder.setTitle("Remove from Favorites?");
         builder.setPositiveButton("Yes", (dialog, which) -> {
-            viewModel.deleteHotelFromFav(hotelName);
+            viewModel.deleteHotelFromFav(hotelId);
+            viewModel.refresh();
         });
         builder.setNegativeButton("No", (dialog, which) -> dialog.dismiss());
         builder.show();

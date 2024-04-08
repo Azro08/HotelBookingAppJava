@@ -73,7 +73,7 @@ public class FavoriteHotelsRvAdapter extends RecyclerView.Adapter<FavoriteHotels
             binding.ivAddToFav.setOnClickListener(v -> {
                 if (hotel != null) {
                     binding.ivAddToFav.setBackgroundResource(R.drawable.favorite_border_icon);
-                    favoriteClickListener.onFavoriteClick(hotel.getName());
+                    favoriteClickListener.onFavoriteClick(hotel.getHotelId());
                 }
             });
         }

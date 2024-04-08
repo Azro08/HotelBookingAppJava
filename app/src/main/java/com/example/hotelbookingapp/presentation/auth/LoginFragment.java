@@ -22,6 +22,8 @@ import com.example.hotelbookingapp.domain.model.UserRole;
 import com.example.hotelbookingapp.helper.AuthManager;
 import com.example.hotelbookingapp.presentation.admin.AdminActivity;
 
+import java.util.Objects;
+
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
@@ -56,28 +58,13 @@ public class LoginFragment extends Fragment {
         User user = new User();
         user.setEmail(email);
         user.setPassword(password);
-//        user.setRole(UserRole.user_role.name());
         viewModel.login(user);
+        if (!Objects.equals(viewModel.getLoginErrorResponse(), "")) {
+            Toast.makeText(requireContext(), viewModel.getLoginErrorResponse(), Toast.LENGTH_SHORT).show();
+        }
         viewModel.getUseResponse().observe(getViewLifecycleOwner(), userResponse -> {
-//            switch (userRoleResponse){
-//                case "USER_ROLE":
-//                    authManager.saveUser(email);
-//                    authManager.saveRole(userRoleResponse);
-//                    startActivity(new Intent(getActivity(), MainActivity.class));
-//                    break;
-//                case "ADMIN_ROLE":
-//                    authManager.saveUser(email);
-//                    authManager.saveRole(userRoleResponse);
-//                    startActivity(new Intent(getActivity(), AdminActivity.class));
-//                    break;
-//                default:
-//                    Log.d("Login", userRoleResponse.toString());
-//                    Toast.makeText(requireContext(), "Invalid Credentials", Toast.LENGTH_SHORT).show();
-//                    break;
-//
-//            }
             Log.d("Login", userResponse.getRole());
-            viewModel.getAuth_token().observe(getViewLifecycleOwner(), authTokenResponse ->{
+            viewModel.getAuth_token().observe(getViewLifecycleOwner(), authTokenResponse -> {
                 if (userResponse.getRole().equals(UserRole.ROLE_USER.name())) {
                     Log.d("LoginUser", userResponse.toString());
                     saveUser(email, userResponse.getRole(), userResponse.getId(), authTokenResponse);
@@ -97,11 +84,28 @@ public class LoginFragment extends Fragment {
 
     private void saveUser(String email, String role, int id, String authToken) {
         Log.d("LoginSavedUser", email + " " + role + " " + id + " " + authToken);
-        authManager.saveUserEmail(email);
-        authManager.saveRole(role);
-        authManager.saveUserId(id);
-        authManager.saveUserToken(authToken);
+        authManager.saveUser(email, id, role);
+        authManager.saveToken(authToken);
     }
+
+
+    //            switch (userRoleResponse){
+//                case "USER_ROLE":
+//                    authManager.saveUser(email);
+//                    authManager.saveRole(userRoleResponse);
+//                    startActivity(new Intent(getActivity(), MainActivity.class));
+//                    break;
+//                case "ADMIN_ROLE":
+//                    authManager.saveUser(email);
+//                    authManager.saveRole(userRoleResponse);
+//                    startActivity(new Intent(getActivity(), AdminActivity.class));
+//                    break;
+//                default:
+//                    Log.d("Login", userRoleResponse.toString());
+//                    Toast.makeText(requireContext(), "Invalid Credentials", Toast.LENGTH_SHORT).show();
+//                    break;
+//
+//            }
 
     @Override
     public void onDestroy() {

@@ -130,17 +130,23 @@ public class HotelsListViewModel extends ViewModel {
     }
 
     public void addToFavorites(SingleHotelItem hotel) {
-        favoriteHotelsRepository.saveToFavorite(hotel, new ApiCallback<String>() {
-            @Override
-            public void onSuccess(String responseBody) {
-                addToFavState.postValue(responseBody);
-            }
+        try {
+            favoriteHotelsRepository.saveToFavorite(hotel, new ApiCallback<>() {
+                @Override
+                public void onSuccess(String responseBody) {
+                    Log.d("addToFavS", responseBody);
+                    addToFavState.postValue(responseBody);
+                }
 
-            @Override
-            public void onFailure(String errorMessage) {
-                addToFavError = errorMessage;
-            }
-        });
+                @Override
+                public void onFailure(String errorMessage) {
+                    Log.d("addToFav2", errorMessage);
+                    addToFavError = errorMessage;
+                }
+            });
+        } catch (Exception e) {
+            Log.d("addToFav3", e.getMessage());
+        }
     }
 
     @Override

@@ -2,11 +2,11 @@ package com.example.hotelbookingapp.helper;
 
 public class Constants {
     public static final String HOTELS_PROVIDER_BASE_URL = "https://hotels-com-provider.p.rapidapi.com/v2/";
-    public static final String BASE_URL = "http://172.17.96.15:8088/api/";
+    public static final String BASE_URL = "http://192.168.100.38:8088/api/";
     public static final String API_KEY = "38d69bfad7mshe1ddb8dcfb829c8p1c872ejsn18acd4c5def8";
     public static final String SHARED_PREF_NAME = "user_pref";
     public static final String USER_KEY = "user_key";
-    public static final String USER_ID_KEY = "user_key";
+    public static final String USER_ID_KEY = "user_id_key";
     public static final String TOKEN_KEY = "user_key";
     public static final String ROLE_KEY = "role_key";
     public static final String USER_ROLE = "USER_ROLE";
