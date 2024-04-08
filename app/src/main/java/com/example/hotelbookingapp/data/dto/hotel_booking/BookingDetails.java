@@ -14,6 +14,7 @@ public class BookingDetails {
     private int childrenNum;
     private String paymentType;
     private CardDetails cardDetails;
+    private double totalPrice;
 
     public BookingDetails() {
         // Default constructor required for Gson serialization
@@ -21,7 +22,7 @@ public class BookingDetails {
 
     public BookingDetails(int bookId, String hotelName, int userId, String firstName, String lastName, String email,
                           String phoneNum, String checkInDate, String checkOutDate, int adultNumber, int childrenNum,
-                          String paymentType, CardDetails cardDetails) {
+                          String paymentType, CardDetails cardDetails, double totalPrice) {
         this.bookId = bookId;
         this.hotelName = hotelName;
         this.userId = userId;
@@ -35,6 +36,7 @@ public class BookingDetails {
         this.childrenNum = childrenNum;
         this.paymentType = paymentType;
         this.cardDetails = cardDetails;
+        this.totalPrice = totalPrice;
     }
 
     public String getHotelName() {

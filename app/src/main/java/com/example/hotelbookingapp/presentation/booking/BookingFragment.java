@@ -21,6 +21,8 @@ import com.example.hotelbookingapp.helper.AuthManager;
 import com.example.hotelbookingapp.helper.Constants;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -35,6 +37,7 @@ public class BookingFragment extends Fragment {
     private BookingViewModel viewModel;
     @Inject
     AuthManager authManager;
+    private double price = 0.0;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -47,6 +50,7 @@ public class BookingFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(BookingViewModel.class);
         assert getArguments() != null;
         String hotelName = getArguments().getString(Constants.HOTEL_NAME_KEY);
+        price = getArguments().getDouble(Constants.HOTEL_PRICE_KEY);
         if (hotelName != null) {
             binding.textViewHotelName.setText(hotelName);
         }
@@ -54,8 +58,6 @@ public class BookingFragment extends Fragment {
         binding.buttonFinish.setOnClickListener(v -> {
             if (areAllFieldsFilled()) {
                 bookHotel();
-                Toast.makeText(requireContext(), "Booked", Toast.LENGTH_LONG).show();
-                NavHostFragment.findNavController(this).popBackStack();
             } else {
                 Toast.makeText(requireContext(), "Please fill all the fields", Toast.LENGTH_LONG).show();
             }
@@ -105,17 +107,30 @@ public class BookingFragment extends Fragment {
         int cvv = parseNullableInt(binding.editTextCVV.getText().toString());
         int userId = authManager.getUserId();
         int bookId = generateRandomId();
+        double totalPrice = calcTotalPrice(checkInDate, checkOutDate, adultsNumber, childrenNumber);
         BookingDetails bookingDetails = new BookingDetails(
                 bookId, hotelName, userId, firstName, lastName, email, phoneNumber, checkInDate, checkOutDate,
-                adultsNumber, childrenNumber, paymentType, new CardDetails(cardNumber, expiryDate, cvv)
+                adultsNumber, childrenNumber, paymentType, new CardDetails(cardNumber, expiryDate, cvv), totalPrice
         );
 
         viewModel.bookHotel(bookingDetails);
         viewModel.getBookingResponse().observe(getViewLifecycleOwner(), bookingResponse -> {
             if (bookingResponse != null) {
-                Toast.makeText(requireContext(), bookingResponse, Toast.LENGTH_LONG).show();
+                Toast.makeText(requireContext(), "Status: " + bookingResponse, Toast.LENGTH_LONG).show();
+                NavHostFragment.findNavController(this).popBackStack();
+            } else {
+                Toast.makeText(requireContext(), "Failed", Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private double calcTotalPrice(String startDateStr, String endDateStr, int adults, int children) {
+        LocalDate startDate = LocalDate.parse(startDateStr);
+        LocalDate endDate = LocalDate.parse(endDateStr);
+        int daysBooked = Math.toIntExact(Math.abs(startDate.until(endDate).getDays()));
+        double priceForAdults = daysBooked * price * adults;
+        double priceForChildren = daysBooked * price * 0.5 * children;
+        return priceForAdults + priceForChildren;
     }
 
     private int generateRandomId() {

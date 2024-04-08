@@ -35,6 +35,7 @@ public class HotelDetailsFragment extends Fragment {
     private HotelImagesPagerAdapter viewPagerAdapter;
     private Disposable subscription;
     private double score = 0.0;
+    private double price = 0.0;
 
     @Override
     public View onCreateView(
@@ -51,6 +52,7 @@ public class HotelDetailsFragment extends Fragment {
         assert getArguments() != null;
         hotelId = getArguments().getString(Constants.HOTEL_ID_KEY);
         score = getArguments().getDouble(Constants.SCORE_KEY);
+        price = getArguments().getDouble(Constants.HOTEL_PRICE_KEY);
         if (hotelId != null) {
             viewModelOutputs(hotelId);
         } else {
@@ -140,6 +142,7 @@ public class HotelDetailsFragment extends Fragment {
         binding.buttonBookNow.setOnClickListener(view -> {
             Bundle bundle = new Bundle();
             bundle.putString(Constants.HOTEL_NAME_KEY, data.getSummary().getName());
+            bundle.putDouble(Constants.HOTEL_PRICE_KEY, price);
             NavHostFragment.findNavController(this).navigate(
                     R.id.nav_details_to_book, bundle
             );

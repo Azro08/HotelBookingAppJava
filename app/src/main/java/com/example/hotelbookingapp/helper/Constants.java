@@ -17,6 +17,7 @@ public class Constants {
     public static final String HOTEL_ID_KEY = "hotelId";
     public static final String SCORE_KEY = "hotelScore";
     public static final String HOTEL_NAME_KEY = "hotelName";
+    public static final String HOTEL_PRICE_KEY = "hotelPrice";
     public static final String FAVORITE_HOTELS = "favorite_hotels";
     public static final String BOOKING = "booking";
 }

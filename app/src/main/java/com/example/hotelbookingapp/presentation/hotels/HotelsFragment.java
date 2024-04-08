@@ -145,10 +145,27 @@ public class HotelsFragment extends Fragment {
         Bundle bundle = new Bundle();
         bundle.putDouble(Constants.SCORE_KEY, data.getReviews().getScore());
         bundle.putString(Constants.HOTEL_ID_KEY, data.getId());
+        double price = extractDoubleFromPriceString(data.getPrice().getDisplayMessages().get(0).getLineItems().get(0).getPrice().getPriceTag());
+        bundle.putDouble(Constants.HOTEL_PRICE_KEY, price);
         NavHostFragment.findNavController(this).navigate(
                 R.id.nav_hotel_to_details,
                 bundle
         );
+    }
+
+    public static double extractDoubleFromPriceString(String priceString) {
+        // Remove any non-numeric characters except for '.' (decimal point)
+        String numericString = priceString.replaceAll("[^0-9.]", "");
+
+        try {
+            // Parse the numeric string to double
+            double extractedPrice = Double.parseDouble(numericString);
+            return extractedPrice;
+        } catch (NumberFormatException e) {
+            // Handle parsing error (e.g., if string is not a valid number)
+            System.out.println("Error parsing price string: " + e.getMessage());
+            return 0.0; // Return default value or handle the error as needed
+        }
     }
 
     @Override
